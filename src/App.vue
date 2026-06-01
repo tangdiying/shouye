@@ -4,7 +4,6 @@
     <nav class="nav" :class="{ scrolled: isNavScrolled }">
       <a href="#" class="nav-logo" @click="handleLogoClick">HELLO</a>
       <ul class="nav-links">
-        <li><a href="#about" @click="scrollToSection">关于</a></li>
         <li><a href="#models">作品</a></li>
         <li><a href="#build">探索</a></li>
         <li><a href="#blog">博客</a></li>
@@ -20,7 +19,6 @@
 
     <!-- 移动端菜单 -->
     <div class="mobile-menu" :class="{ open: isMobileMenuOpen }">
-      <a href="#about" @click="closeMobileMenu">关于</a>
       <a href="#models" @click="closeMobileMenu">作品</a>
       <a href="#build" @click="closeMobileMenu">探索</a>
       <a href="#blog" @click="closeMobileMenu">博客</a>
@@ -112,16 +110,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- 关于 -->
-    <section class="section" id="about">
-      <div class="about-text reveal reveal-delay-1" :class="{ visible: showSections.about }">
-        <p>欢迎来到我的技术空间站。在这里，我记录着对前端技术的深度思考、架构设计经验与工程实践总结。</p>
-        <p>作为一名前端老兵，我见证了Web技术从刀耕火种到现代化工程体系的演进。从早期的表格布局、Flash动画，到如今的组件化架构、微前端方案，每一步都凝聚着开发者的智慧与创造力。</p>
-        <p>在这个快速变化的领域，我始终保持着对技术的敬畏与好奇。相信优秀的前端不仅是功能的实现，更是艺术与工程的完美融合。</p>
-        <p>希望这里的内容能为你带来启发，让我们一同在前端的海洋中探索前行。</p>
       </div>
     </section>
 
@@ -370,10 +358,6 @@ const handleLogoClick = (e) => {
   isHeroFlipped.value = false
 }
 
-const scrollToSection = (e) => {
-  e.preventDefault()
-  isHeroFlipped.value = false
-}
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
@@ -480,7 +464,7 @@ a { color: inherit; text-decoration: none; }
 .nav-toggle.open span:nth-child(2) { opacity: 0; }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-.hero { position: relative; width: 100%; height: 95vh; min-height: 600px; overflow: hidden; cursor: crosshair; }
+.hero { position: relative; width: 100%; height: 100vh; min-height: 600px; overflow: hidden; cursor: crosshair; }
 .matrix-wrap { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
 .matrix-line { display: flex; flex-wrap: nowrap; white-space: nowrap; font-family: var(--font-en); font-size: clamp(40px, 6.5vw, 72px); font-weight: 700; line-height: 1.5; letter-spacing: 0.35em; color: var(--text-matrix); }
 .matrix-line:nth-child(odd) { margin-left: -2em; }
@@ -497,8 +481,8 @@ a { color: inherit; text-decoration: none; }
 .hero-title-wrap h1 { font-size: clamp(36px, 6vw, 80px); font-weight: 700; letter-spacing: 0.02em; line-height: 1.2; }
 
 .hero-about-panel { 
-  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; 
-  padding: 40px; border: 1px dashed rgba(0, 0, 0, 0.2); border-radius: 0; 
+  width: 90%; height: 85%; margin: 0; 
+  padding: 40px 100px; border: 1px dashed rgba(0, 0, 0, 0.2); border-radius: 0; 
   background: rgba(255, 255, 255, 0.72); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); overflow-y: auto; 
 }
 .hero-about-title { font-size: clamp(24px, 4vw, 36px); font-weight: 700; letter-spacing: 0.02em; line-height: 1.3; margin-bottom: 24px; }
@@ -510,8 +494,6 @@ a { color: inherit; text-decoration: none; }
 .hero-flip-hint .hint-text { font-size: 13px; letter-spacing: 0.12em; color: var(--text-muted); transition: color 0.3s var(--ease); }
 .hero-flip-hint .hint-arrow { font-size: 20px; color: var(--text-muted); animation: bounce 2s ease-in-out infinite; transition: color 0.3s var(--ease); }
 .hero-flip-hint:hover .hint-text, .hero-flip-hint:hover .hint-arrow { color: var(--text); }
-.hero-card-back .hero-flip-hint .hint-text, .hero-card-back .hero-flip-hint .hint-arrow { color: rgba(255, 255, 255, 0.6); }
-.hero-card-back .hero-flip-hint:hover .hint-text, .hero-card-back .hero-flip-hint:hover .hint-arrow { color: #fff; }
 
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
@@ -525,7 +507,6 @@ a { color: inherit; text-decoration: none; }
 .hero-spotlight .hero-about-panel { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 40px; border: 1px dashed rgba(255, 255, 255, 0.3); border-radius: 0; background: rgba(0, 0, 0, 0.6); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); overflow-y: auto; }
 .hero-spotlight .hero-about-body, .hero-spotlight .hero-about-sign { color: rgba(255, 255, 255, 0.85); }
 .hero-spotlight .hero-flip-hint .hint-text, .hero-spotlight .hero-flip-hint .hint-arrow { color: rgba(255, 255, 255, 0.8); }
-.hero-spotlight .hero-flip-hint:hover .hint-text, .hero-spotlight .hero-flip-hint:hover .hint-arrow { color: #fff; }
 
 .section { padding: 120px 40px; max-width: 1200px; margin: 0 auto; }
 .section-label { font-size: 12px; letter-spacing: 0.2em; color: var(--text-muted); margin-bottom: 24px; }
