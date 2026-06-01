@@ -1,0 +1,77 @@
+name: Deploy Vue Project to BT Panel
+
+# 👇 增加以下配置：同一时间同一个分支只允许跑一个任务，新的会顶替掉旧的
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# 触发条件：当 main 分支有 push 时触发（如果你的主分支叫 master，请把下面改成 master）
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch: # 👈 加上这一行，就可以手动点按钮运行
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 拉取 GitHub 仓库中的最新代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. 安装 Node.js 环境（这里选了 v18，你可以根据你的 Vue 项目需求调整版本）
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # 3. 安装并配置 pnpm
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9 # 也可以指定具体版本，如 9.1.0。如果不写 version 会默认安装最新版
+          run_install: false
+
+      # 4. 针对于 pnpm 的缓存机制优化
+      # 核心逻辑：以 pnpm-lock.yaml 的 MD5 哈希值为 Key。只要依赖没变，直接复用 store 缓存
+      - name: Cache Pnpm Modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/pnpm/store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      # 5. 设置国内镜像源并安装依赖
+      - name: Install Dependencies
+        run: |
+          # 使用 sed 命令，把 pnpm-lock.yaml 里的 npmmirror 域名动态替换为官方域名
+          if [ -f pnpm-lock.yaml ]; then
+            sed -i 's/registry.npmmirror.com/registry.npmjs.org/g' pnpm-lock.yaml
+          fi
+
+          # 执行严格锁定安装
+          pnpm install --frozen-lockfile
+
+      # 3. 安装依赖并打包
+      - name: Build Project
+        run: pnpm run build
+
+      # 4. 通过 SSH/SFTP 把打包好的 dist 目录传送到宝塔服务器
+      - name: Deploy to BT Server
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SOURCE: 'dist/' # 你的 Vue 打包产物目录
+          REMOTE_HOST: ${{ secrets.SERVER_HOST }}
+          REMOTE_PORT: ${{ secrets.SERVER_PORT }}
+          REMOTE_USER: 'root'
+          TARGET: '/www/wwwroot/tdywork.cn' # ⚠️请把这里改成你在宝塔中真实的网站根目录路径！
+          # 👇 添加以下两行：开启压缩传输并保持时间戳，实现精准增量更新
+          ARGS: '-avzr --delete --exclude=.user.ini'
+          SCRIPT_AFTER: |
+            chown -R www:www /www/wwwroot/tdywork.cn
+            chmod -R 755 /www/wwwroot/tdywork.cn
+            echo 'Deployment complete!'
