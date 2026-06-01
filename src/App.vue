@@ -49,12 +49,11 @@
             <div class="hero-about-panel">
               <h2 class="hero-about-title">关于我</h2>
               <div class="hero-about-body">
-                <p>深耕前端领域十余年，专注于创造极致的用户体验与高性能的Web应用。</p>
+                <p>深耕前端领域六余年，专注于创造极致的用户体验与高性能的Web应用。</p>
                 <p>从早期的 jQuery 时代到现代的 Vue/React 生态，见证并参与了前端技术的演进历程。</p>
                 <p>相信代码不仅是实现功能的工具，更是表达创意与思想的载体。</p>
                 <p>专业技能</p>
                 <p>精通 Vue3、React、TypeScript 等主流技术栈，擅长复杂交互系统设计、性能优化、工程化实践与跨端开发。</p>
-                <p>曾主导多个百万级DAU产品的前端架构设计与核心开发。</p>
                 <p>关于这座站点</p>
                 <p>这里是我的技术后花园，记录着对前端技术的深度思考、实战经验总结与行业洞察。</p>
                 <p>希望通过分享，与更多志同道合的开发者交流成长，共同推动前端技术的边界。</p>
@@ -204,7 +203,8 @@
         <div class="join-item"><span class="num">05</span><h3>开源项目合作</h3><span class="card-arrow">→</span></div>
         <div class="join-item"><span class="num">06</span><h3>技术分享邀约</h3><span class="card-arrow">→</span></div>
       </div>
-      <p class="join-contact reveal" :class="{ visible: showSections.join }">如有任何问题，欢迎邮件联系：<a href="mailto:tangdiying@example.com">tangdiying@example.com</a></p>
+      <p class="join-contact reveal" :class="{ visible: showSections.join }">如有任何问题，欢迎邮件联系：<a href="mailto:tdydemo@126.com">tdydemo
+        @126.com</a></p>
     </section>
 
     <!-- 页脚 -->
@@ -573,7 +573,7 @@ a { color: inherit; text-decoration: none; }
 
 .mobile-menu { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(255, 255, 255, 0.97); -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px); flex-direction: column; align-items: center; justify-content: center; gap: 32px; opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease); }
 .mobile-menu.open { opacity: 1; pointer-events: auto; }
-.mobile-menu a { font-size: 20px; letter-spacing: 0.1em; color: var(--text-muted); transition: color 0.25s; }
+.mobile-menu a { font-size: 20px; letter-spacing: 0.1em; transition: color 0.25s; }
 .mobile-menu a:hover { color: var(--text); }
 
 @media (max-width: 1024px) {
