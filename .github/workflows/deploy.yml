@@ -27,37 +27,22 @@ jobs:
         with:
           node-version: 18
 
-      # 3. 安装并配置 pnpm
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9 # 也可以指定具体版本，如 9.1.0。如果不写 version 会默认安装最新版
-          run_install: false
-
-      # 4. 针对于 pnpm 的缓存机制优化
-      # 核心逻辑：以 pnpm-lock.yaml 的 MD5 哈希值为 Key。只要依赖没变，直接复用 store 缓存
-      - name: Cache Pnpm Modules
+      # 3. 针对于 npm 的缓存机制优化
+      - name: Cache npm Modules
         uses: actions/cache@v4
         with:
-          path: ~/.local/share/pnpm/store
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-npm-
 
-      # 5. 设置国内镜像源并安装依赖
+      # 4. 安装依赖
       - name: Install Dependencies
-        run: |
-          # 使用 sed 命令，把 pnpm-lock.yaml 里的 npmmirror 域名动态替换为官方域名
-          if [ -f pnpm-lock.yaml ]; then
-            sed -i 's/registry.npmmirror.com/registry.npmjs.org/g' pnpm-lock.yaml
-          fi
+        run: npm ci
 
-          # 执行严格锁定安装
-          pnpm install --frozen-lockfile
-
-      # 3. 安装依赖并打包
+      # 5. 打包项目
       - name: Build Project
-        run: pnpm run build
+        run: npm run build
 
       # 4. 通过 SSH/SFTP 把打包好的 dist 目录传送到宝塔服务器
       - name: Deploy to BT Server
