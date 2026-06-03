@@ -4,13 +4,13 @@
     <nav class="nav" :class="{ scrolled: isNavScrolled }">
       <a href="#" class="nav-logo" @click="handleLogoClick">HELLO</a>
       <ul class="nav-links">
-        <li><a href="#models">作品</a></li>
+        <li><a href="https://oa.tdywork.cn/" target="_blank" rel="noopener noreferrer">作品</a></li>
         <li><a href="#build">探索</a></li>
-        <li><a href="#blog">博客</a></li>
+        <li><a href="https://blog.tdywork.cn/" target="_blank" rel="noopener noreferrer">博客</a></li>
         <li><a href="#join">联系</a></li>
       </ul>
       <div class="nav-actions">
-        <a href="#blog" class="btn btn-primary">博客</a>
+        <a href="https://blog.tdywork.cn/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">博客</a>
       </div>
       <button class="nav-toggle" :class="{ open: isMobileMenuOpen }" @click="toggleMobileMenu">
         <span></span><span></span><span></span>
@@ -19,11 +19,11 @@
 
     <!-- 移动端菜单 -->
     <div class="mobile-menu" :class="{ open: isMobileMenuOpen }">
-      <a href="#models" @click="closeMobileMenu">作品</a>
+      <a href="https://oa.tdywork.cn/" target="_blank" rel="noopener noreferrer">作品</a>
       <a href="#build" @click="closeMobileMenu">探索</a>
-      <a href="#blog" @click="closeMobileMenu">博客</a>
+      <a href="https://blog.tdywork.cn/" target="_blank" rel="noopener noreferrer">博客</a>
       <a href="#join" @click="closeMobileMenu">联系</a>
-      <a href="#blog" class="btn btn-primary">博客</a>
+      <a href="https://blog.tdywork.cn/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">博客</a>
     </div>
 
     <!-- Hero -->
