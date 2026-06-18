@@ -38,7 +38,7 @@
               </div>
             </div>
             <div class="hero-title-wrap">
-              <h1>你好，我是 唐頔颖</h1>
+              <h1>你好，欢迎观看</h1>
             </div>
             <div class="hero-flip-hint" @click="toggleHeroCard">
               <span class="hint-text">{{ isHeroFlipped ? '返回' : '点击了解更多' }}</span>
